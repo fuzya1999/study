@@ -1,0 +1,19 @@
+#div1{
+    width: 400px;
+    height: 400px;
+    background: url(../img/aa.png) no-repeat;
+    transform: rotate(30deg);
+}
+
+
+
+
+.container{
+    width: 200px;
+    height: 200px;
+}
+
+.mayuyan{
+    width: 200px;
+    height: 200px;
+}
