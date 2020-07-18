@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="jquery.js"></script>
+    <script>
+        // //1     手动next()调用每一步
+        // function* helloWorldGenerator() {
+        //   yield 'hello';
+        //   yield 'world';
+        //   return 'ending';
+        // }
+
+        // var hw = helloWorldGenerator(); 
+        // console.log(hw.next());                   //{value: "hello", done: false}
+        // console.log(hw.next());                   //{value: "world", done: false}
+        // console.log(hw.next());                   //{value: "ending", done: true}
+        // console.log(hw.next());                   //{value: undefined, done: true}
+
+        // //2
+        // function* foo(x) {
+        //   var y = 2 * (yield (x+1));    //(x+1)返回6，yield (x+1)返回undefined,所以y返回undefined
+        //   var z = yield (y / 3);        //所以z返回undefined
+        //   return x + y + z;
+        // }
+        // var a = foo(5); 
+        // console.log(a.next());          //{value: 6, done: false}        (x+1)         
+        // console.log(a.next());          //{value: NaN, done: false}      
+        // console.log(a.next());          //{value: NaN, done: true}   
+
+        // var b = foo(5); 
+        // console.log(b.next());             //{value: 6, done: false}       
+        // console.log(b.next(12));           //{value: 8, done: false}      [yield (x+1)]=12             
+        // console.log(b.next(13));           //{value: 42, done: true}      [yield (y / 3)]=13
+
+        //3
+        function requst(url){
+            $.get(url,res=>{
+                getDate.next(res);
+            })
+        }     
+        function* gen(){
+            let res1 = yield requst('a.json');
+            console.log(res1);
+            let res2 = yield requst('b.json');
+            console.log(res2);
+            let res3 = yield requst('c.json');
+            console.log(res3);
+
+        }       
+        let getDate = gen();
+        getDate.next();
+
+               
+
+        
+
+
+
+    </script>
+</body>
+</html>

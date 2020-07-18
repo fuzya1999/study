@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        js中的数据类型
+        数字：number
+        字符串/字符：str
+        boolean：true/false
+        undefined
+        null
+        object
+
+        ES6中引用新的数据类型：symbol
+    -->
+    <script>
+        //1
+        let obj = {
+            name:'zs',
+            age:18
+        };
+        obj.name = 'lisi';
+        obj.school = '交大';
+
+        //2
+        let age = Symbol('name');
+        let name = Symbol('age');
+        let name1 = Symbol('name');
+        let obj = {
+            name:'xx',
+            [age]:18,
+            [name]:'lisi',
+            [name1]:'yy'
+
+        }
+        console.log(obj[age]);
+        
+
+
+
+
+
+    </script>
+</body>
+</html>

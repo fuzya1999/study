@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="todolist.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+
+</head>
+<body>
+    <div id="app" class="text-center">
+        <div class="tttt">todolist</div>
+        <div class="name1">
+            商品名称<input type="text" v-model="nam" >
+            <button type="button" @click="find(nam)">搜索</button>
+        </div>
+        <div class="name2">
+            商品名称<input type="text" v-model="productName">
+            商品价格<input type="text" v-model.number="productPrice">
+            <button @click="add" type="button">增加</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="active">
+                    <td>删除</td>
+                    <td>名称</td>
+                    <td>价格</td>
+                    <td>删除</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(product,index) in productList" @click="b(product)" :class="product.isRed? 'red':''">
+                    <td><input type="checkbox" @click.stop v-model="a" :value="index"></td>
+                    <td>{{product.productName}} </td>
+                    <td>{{product.productPrice}} </td>
+                    <td><button type="button" class="btn btn-warning glyphicon glyphicon-remove btn-xs" @click.stop="del(index)"></button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-danger btn-xs" @click="d()">删除选中</button></td>
+                    <td colspan="3">总价是：{{total}} </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+    </div>
+
+    <script src="./todolist.js"></script>
+
+</body>
+</html>

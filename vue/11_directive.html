@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .div1{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-zzn="bg">zzn</div>
+        <h1 v-zzn="bgw">myy</h1>
+        <div class="div1" v-drag v-xx></div>
+
+
+
+
+    </div>
+
+
+    <script src="vue.js"></script>
+    <script>
+        Vue.directive('zzn', (el,binding,vNode)=>{
+            // console.log(el);
+            // console.log(binding);
+            // console.log(vNode);
+            el.style.background = binding.value;
+        });
+        Vue.directive('drag',(el,binding,vNode)=>{
+            el.style.position = 'absolute';
+            el.onmousedown = function(e){
+                let xDis = e.clientX - el.offsetLeft;
+                let yDis = e.clientY - el.offsetTop;
+                document.onmousemove = function(e){
+                    el.style.left = e.clientX - xDis + 'px';
+                    el.style.top = e.clientY - yDis + 'px';
+                };
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                }
+            }
+        })
+        Vue.directive('xx',{
+            bind: function () {                      //绑定
+                console.log('bind');
+            },
+            inserted: function () {                 //插入
+                console.log('inserted');
+            },
+            update: function () {                   //更新
+                console.log('update');
+            },
+            componentUpdated: function () {
+                console.log('componentUpdated');
+            },
+            unbind: function () {
+                console.log('unbind');
+            }
+        })
+        new Vue ({
+            el:'#app',
+            data() {
+                return {
+                    bg :'#f00',
+                    bgw:'#0f0'
+                }
+            },
+        })
+
+
+
+
+
+    </script>
+</body>
+</html>

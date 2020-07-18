@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">btn</button>
+    <script>
+        //箭头函数内的this对象，就是定义时所在的对象，而不是使用时所在的对象
+        //箭头函数不可以作为构造函数 ，不可以用new命令
+        //不可以使用arguments对象(该对象在函数体内不存在)，如果要用，可以用rest参数代替，如3.3
+        //1     =>    左边参数右边方法体
+        //1.1
+        function sum(a,b){
+            return a + b;
+        }
+        console.log(sum(5,6));
+        //1.2
+        let sum = (a,b)=>{
+            return a + b;
+            
+        }
+        console.log(sum(5,6));
+        //1.3
+        let sum = (a, b) => a + b;
+        console.log(sum(5,6));
+        //1.4
+        let x = x =>x;
+        console.log(x(5));     //5
+
+        //2
+        let oBtn = document.getElementById('btn');
+        oBtn.onclick = function(){
+            setTimeout(()=>{
+                console.log(this);     //箭头函数内的this对象，就是定义时所在的对象，而不是使用时所在的对象
+                                       //理解：箭头函数没有this，所以向外面一层找，就找到了oBtn
+            },2000);
+        }
+        
+        //3
+        //3.1
+        function abc(){
+            console.log(arguments);      //数组123
+        }
+        abc(1,2,3);    
+        //3.2
+        let abc = () =>{
+            console.log(arguments);      //报错，箭头函数没有arguments
+        }
+        abc(1,2,3);    
+        //3.3
+        let abc = (...arg) =>{
+            console.log(arg);      //报错，箭头函数没有arguments
+        }
+        abc(1,2,3);    
+
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1
+        let s1 = new Set([5,6,7,8]);     //set中的数据不允许重复
+        console.log(s1);
+        
+
+        //2   set 数组去重
+        let arr = [2,2,3,5,6,1,2,3];
+        let s2 = new Set(arr);
+        console.log(s2);
+
+        //3
+        let arr = [2,2,3,5,6,1,2,3];
+        let s2 = new Set(arr);
+        for(let [item,index] of s2.entries()){        //entries返回一个数组的迭代对象
+            console.log(item,index);    //22  33  55  66  11    (set把数值当作索引)
+        }
+
+        for(let [index,item] of s2.entries()){
+            console.log(index,item);    //22  33  55  66  11    (set把数值当作索引)
+        }
+
+        //4    数组去重
+        let arr = [2,2,3,5,6,1,2,3];
+        let result = [];
+        for(let [index,item] of arr.entries()){
+            if(!result.includes(item)){
+                result.push(item);
+            }
+        }
+        console.log(result);
+
+        //5    set
+        let s1 = new Set([5,6,7,8]);     //set中的数据不允许重复
+        s1.add(9);
+        console.log(s1);   //Set(5) {5, 6, 7, 8, 9}
+        s1.delete(6);
+        console.log(s1);   //Set(4) {5, 7, 8, 9}
+        console.log(s1.size);       //4
+
+        //6   WeakSet只能放对象
+        //6.1
+        let ws = new WeakSet();
+        ws.add({
+            name:'xx',
+            age:18
+        });
+        console.log(ws);   //输出一个对象
+        //6.2
+        let ws = new WeakSet();
+        ws.add({
+            name:'xx',
+            age:18
+        });
+        ws.add({
+            name:'xx',
+            age:18
+        });
+        console.log(ws);     //输出两个对象，两个对象值相同
+        //6.3
+        let ws = new WeakSet();
+        let obj1 = {
+            name:'xx',
+            age:18
+        }
+        ws.add(obj1);
+        let obj2 = obj1;
+        ws.add(obj2);
+        console.log(ws);   //输出一个对象，WeakSet有唯一性
+        
+
+        
+        
+        
+        
+
+
+    </script>
+</body>
+</html>

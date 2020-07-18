@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1
+        let str = '123@456@789';
+        console.log(str.split('@'));    //123  456  789
+        
+        //2
+        //2.1
+        let h = 'hello';
+        let str = 'aufhewudv'+ h +'siuhuaewih';
+        console.log(str);          //aufhewudvhellosiuhuaewih  
+        //2.2
+        let h = 'hello';
+        let a = 5, b = 6;
+        let str = 'aufhewudv'+ h +'siuh'+(a+b)+'uaewih';
+        console.log(str);         //aufhewudvhellosiuh11uaewih
+        //2.3
+        let h = 'hellow'
+        let a = 5, b = 6;
+        let str = `sagfi${h}wughug
+        aair${a+b}haue
+        heig`;
+        console.log(str);      //sagfihellowwughug
+                               //aair11haue
+                               //heig
+        //2.4
+        let h = 'hellow'
+        let a = 5, b = 6;
+        let str = `sa<h1>h1h1h1</h1>gfi${h}wughug
+        aair${a+b}haue
+        heig`;
+        document.write(str);
+
+        //5
+        let str = 'hello world';
+        console.log(str.indexOf('ll'));    //2
+        console.log(str.indexOf('llx'));   //-1  (不包括返回-1)
+        console.log(str.includes('ll'));   //true
+        console.log(str.includes('llx'));   //false
+        console.log(str.startsWith('he'));   //true
+        console.log(str.startsWith('llx'));   //false
+        console.log(str.endsWith('ld'));   //true
+        console.log(str.endsWith('l'));   //false
+        console.log(str.padStart(13,'ld'));   //ldhello world
+        console.log(str.padStart(20,'ld'));   //ldldldldlhello world
+        console.log(str.padEnd(20,'ld'));   //hello worldldldldldl
+        console.log(str.repeat(3));   //hello worldhello worldhello world
+
+
+
+        
+        
+
+    </script>
+</body>
+</html>

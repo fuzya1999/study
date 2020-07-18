@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="change">change</button>
+        <ul>
+            <li v-for="(item,index) in arr">
+                {{item}}
+            </li>
+        </ul>
+
+
+
+
+
+    </div>
+
+    <script>
+        let data = {
+            productList:[{
+            productName:'衣服',
+            productPrice: 123,
+            isRed:false,
+
+
+        },{
+            productName:'裤子',
+            productPrice: 79,
+
+            isRed:false,
+
+        },{
+            productName:'鞋',
+            productPrice: 1123,
+            isRed:false,
+
+
+        },{
+            productName:'帽子',
+            productPrice: 13,
+            isRed:false,
+
+
+        },{
+            productName:'书',
+            productPrice: 23,
+            isRed:false,
+    
+
+        },{
+            productName:'笔',
+            productPrice: 3,
+            isRed:false,
+
+
+        },],
+        a:[],
+        nam:'请输入关键字',
+        productName:'裤子',
+        productPrice: '请输入价格',
+
+        };
+        // console.log(Object.keys(data));
+        Object.keys(data).forEach((key)=>{
+            define(data,key,data[key]);
+        });
+        function define(data,key,val) {
+            Object.defineProperty(data,key,{
+                get(){                                        //当访问该属性时，会调用此函数。
+                    console.log('get');
+                    return val;
+                },
+                set(newval){                                        //当属性值被修改时，会调用此函数。
+                    console.log('set',`旧值是${val}`,`新值是${newval}`);
+                    // val = newval;
+                }
+            });
+            
+        }
+            console.log(data.productName);
+            data.productName = '衣服'
+            console.log(data.productName);
+
+        // Object.defineProperty();
+
+
+
+    </script>
+</body>
+</html>

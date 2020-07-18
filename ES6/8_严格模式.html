@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //'use strict'即可以全局也可以局部，当参数使用了默认值，解构赋值，或者扩展运算符，那么函数内部不能设置严格模式，会报错
+        //1
+        'use strict';
+        a = 5;      //写var是局部的，不写var是全局.   这里会报错，因为严格模式必须先定义
+        console.log(a);
+
+        //2
+        'use strict';
+        //2.1
+        function foo(){
+            console.log(this);
+            
+        }
+        //2.2
+        function Animal(name,age){
+            console.log(this);      //this指向当前对象
+            this.name = name;
+            this.age = age;
+        }
+        Animal('xx',55);
+
+        //3
+        'use strict';
+        function foo(a,a,b){
+            console.log(a,b);    //5 6               
+        }
+        foo(4,5,6);
+
+        //4
+        console.log(this);
+        let obj = {
+            name:'zs',
+        }        
+
+        with(obj){
+            console.log(name);
+        }
+        
+        //5    n的阶乘
+        //5.1
+        function fn(n){
+            if(n==1){
+                return 1;
+            }
+            return n*fn(n-1);
+        }
+        console.log(fn(10));
+        //5.2
+        function fn(n){
+            if(n==1){
+                return 1;
+            }
+            return n*arguments.callee(n-1);    //arguments.callee表示调用自己，但是严格模式不允许使用
+        }
+        console.log(fn(10));
+        
+        //6
+        function foo([x,y=8]){
+            console.log(x,y);
+            
+        }
+        foo([2,3]);
+
+
+
+
+
+
+    </script>
+</body>
+</html>

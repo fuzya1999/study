@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1
+        function foo(...arg){    //arg可以随便取   
+            console.log(arg);
+        }
+        foo(1,2);
+        foo(1,2,3);
+
+        //2
+        let arr1 = [1,2];
+        let arr2 = [3,4];
+        let arr3 = [3,...arr1,4];
+        console.log(arr3);     //3124
+        
+        //3
+        let arr1 = [1,2,3];
+        let arr2 = arr1;    //arr1和arr2指向同一个地址，改变地址则两个数组都发生改变。
+        arr1.push(4);
+        console.log(arr2);    //1234
+
+        //4
+        let arr1 = [1,2,3];
+        for(let i=0;i<arr1.length;i++){
+            arr3.push();
+        }
+        
+        //5
+        let arr1 = [1,2,3];
+        let arr2 = [...arr1];     //相当于new Array();
+        arr1.push(4);
+        console.log(arr2);       //123
+
+        //6
+        let arr1 = [1,2];
+        let arr2 = [3,4];
+        let arr3 = [...arr1,...arr2]
+        console.log(arr3);       //1234
+        
+        //7
+        let obj1 = {
+            name:'zs',
+            age:18
+        };
+        let obj2 = {
+            age:20,
+            school:'交大'
+        };
+        //7.1
+        //$.extend();
+        //7.2
+        let obj3 = {
+            ...obj1,
+            ...obj2
+        };
+        console.log(obj3);   //{name: "zs", age: 20, school: "交大"}
+
+        //8
+        function foo(a,b,...arg){
+            console.log(a);
+            console.log(b);
+            console.log(arg);  //只能写在最后一个
+        }
+        foo(1,2,3,4,5,6,7);       //1  2   Array(5)
+        
+    </script>
+</body>
+</html>

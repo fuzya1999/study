@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            width: 400px;
+            height: 400px;
+            background: red;
+        }
+        #div2{
+            width: 200px;
+            height: 200px;
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1 -->
+    <!-- v-on简写@ -->
+    <!-- <div id="app">
+        <button v-on:click="add">add</button>
+        <h1>{{count}}</h1>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+            },
+            methods: {
+                add(){
+                    this.count++;
+                }
+            },
+        })
+    </script> -->
+
+
+    <!-- 2 -->
+    <!-- <div id="app2">
+        <button v-on:click="count++">add</button>
+        <h1>{{count}}</h1>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app2',
+            data:{
+                msg:'hello world',
+                count:0,
+            },
+        })
+    </script> -->
+
+
+    <!-- 3 -->
+    <!-- <div id="app">
+        <button v-on:click="add()">add</button>
+        <h1>{{count}}</h1>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+            },
+            methods: {
+                add(){
+                    this.count++;
+                }
+            },
+        })
+    </script> -->
+
+    <!-- 4 -->
+    <!-- <div id="app">
+        <button v-on:click="add(2)">add</button>
+        <h1>{{count}}</h1>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+            },
+            methods: {
+                add(n){
+                    this.count=+n;
+                }
+            },
+        })
+    </script> -->
+
+    <!-- 5      v-model-->
+    <!-- 5.1 -->
+    <!-- <div id="app">
+        <button v-on:click="add(2,$event)">add</button>
+        <input type="text" @keyup="sum($event)" v-model="num">
+        <h1>{{count}}</h1>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+                num:0,        //初始值
+            },
+            methods: {
+                add(n,e){
+                    this.count += n;
+                    console.log(e);
+                    
+                },
+                sum(e){
+                    if (e.keyCodes = 13){
+                        this.count += parseInt(this.num);
+                    }
+                }
+            },
+        })
+    </script>  -->
+    <!-- 5.2 -->
+    <!-- <div id="app">
+        <button v-on:click="add(2,$event)">add</button>
+        <input type="text" @keyup.13="sum($event)" v-model="num">
+        <h1>{{count}}</h1>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+                num:0,        //初始值
+            },
+            methods: {
+                add(n,e){
+                    this.count += n;
+                    console.log(e);
+
+                },
+                sum(e){
+                        this.count += parseInt(this.num);
+                }
+            },
+        })
+    </script>  -->
+
+    <!-- 6 -->
+    <!-- 6.1 -->
+    <!-- <div id="app">
+        <button v-on:click="add(2,$event)">add</button>
+        <input type="text" @keyup.13="sum($event)" v-model="num">
+        <h1>{{count}}</h1>
+
+        <div id="div1" @click="clickDiv1">
+            <div id="div2" @click="clickDiv2($event)">
+
+            </div>
+        </div>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+                num:0,        //初始值
+            },
+            methods: {
+                add(n,e){
+                    this.count += n;
+                    console.log(e);
+                    
+                },
+                sum(e){
+                        this.count += parseInt(this.num);
+                },
+                clickDiv1(){
+                console.log('div1');
+                },
+                clickDiv2(e){
+                    console.log('div2');
+                    e.stopPropagation();
+                }
+            }
+
+        })
+    </script>  -->
+
+    <!-- 6.2 -->
+    <div id="app">
+        <button v-on:click="add(2,$event)">add</button>
+        <input type="text" @keyup.13="sum($event)" v-model="num">
+        <h1>{{count}}</h1>
+
+        <div id="div1" @click="clickDiv1">
+            <div id="div2" @click.stop="clickDiv2($event)">    <!--不冒泡-->
+
+            </div>
+        </div>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0,
+                num:0,        //初始值
+            },
+            methods: {
+                add(n,e){
+                    this.count += n;
+                    console.log(e);
+                    
+                },
+                sum(e){
+                        this.count += parseInt(this.num);
+                },
+                clickDiv1(){
+                console.log('div1');
+                },
+                clickDiv2(e){
+                    console.log('div2');
+                    // e.stopPropagation();
+                }
+            }
+
+        })
+    </script> 
+
+    
+
+
+
+
+
+</body>
+</html>

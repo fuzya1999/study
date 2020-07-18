@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">btn</button>
+    <script>
+        //1
+        function foo(){
+            console.log(this);      //this指向window
+        }
+        foo();       //等同于windo.foo();
+
+        //2
+        setTimeout(function(){
+            console.log(this);      //this指向window           
+        },1000);
+
+        //3
+        let oBtn = document.getElementById('btn');
+        oBtn.onclick = function(){
+            console.log(this);      //this指向btn,即当前指向
+            
+        }
+
+        //4
+        function Animal(name,age){
+            console.log(this);      //this指向当前对象
+            this.name = name;
+            this.age = age;
+        }
+        let a1 = new Animal('xx',5);
+        let a2 = new Animal('yy',7);
+
+        //5
+        let obj = {
+            name:'zs',
+            age:18
+        }
+        function foo(){
+            console.log(this);        //this指向window
+        }
+        foo();
+
+        //6  call apply bind都是改变this的指向，变为指向当前
+        let obj = {
+            name:'zs',
+            age:18
+        }
+        function foo(a,b){
+            console.log(this);        //{name: "zs", age: 18}     this指向当前对象
+            console.log(a,b);         //5 6(call[数])      7 8(apply[数组])        2 3(bind)
+            
+        }
+        foo.call(obj,5,6);             
+        foo.apply(obj,[7,8]);          //数组
+        foo.bind(obj,2,3)();           //bind()只改变this的指向，不调用函数,bind()()才调用
+
+        //7
+        let oBtn = document.getElementById('btn');
+        oBtn.onclick = function(){
+            setTimeout(function(){
+                console.log(this);     //this指向当前oBbtn
+            }.bind(this),2000);        //因为此处只需改变this方向，不需要调用，所以用bind
+        }
+
+
+
+    </script>
+</body>
+</html>

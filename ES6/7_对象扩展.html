@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1
+        //1.1
+        let obj = {
+            name:'zs',
+            age:18,
+            code:function(){
+                console.log('codding');
+                
+            }
+        }
+        console.log(obj);
+        //1.2
+        let zs = 'zhangsan';
+        let n = 'name'
+        let obj = {
+            [n]:zs,        //[n]可以用name，n不行
+            age:18,
+            code(){
+                console.log('codding');
+            }
+        };
+        console.log(obj);
+        obj.code();
+        
+        //2
+        let obj1 = {
+            name:'zs',
+            age:18
+        }
+        let obj2 ={
+            name:'zs',
+            age:18
+        }
+        console.log(obj1 == obj2);              //false
+        console.log(Object.is(obj1,obj2));      //false
+        console.log(Object.is(+0,-0));          //false
+        console.log(Object.is(NaN,NaN));        //true
+
+        //3
+        let obj1 = {
+            name:'zs',
+            age:18
+        }
+        let obj2 ={
+            name:'zs',
+            age:10,
+            school: '交大'
+        }
+        Object.assign(obj1,obj2);
+        obj2.age = 30;
+        console.log(obj1);             //{name: "zs", age: 10, school: "交大"}
+        
+        //4
+        let obj1 = {
+            name:'zs',
+            age:18
+        }
+        let obj2 ={
+            name:'zs',
+            age:10,
+            school: '交大'
+        }
+        console.log('age' in obj1);      //true
+        console.log('age1' in obj1);      //false
+
+        let arr = [1,2,3]
+        console.log(4 in arr);      //false      (表示的是索引为4的位置有没有值，而不是arr中有没有4)
+
+
+        
+
+        
+        
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

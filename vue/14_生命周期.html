@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="count++">add</button>
+        {{count}}
+        <button @click="des">shan</button>
+        <!-- <img src="loading.gif" alt="" v-show="loading"> -->
+        用户名：<input type="text" id="username">
+        <ul>
+            <li v-for="(item,index) in movieList">
+                <!-- {{item.tags}} -->
+            </li>
+        </ul>
+
+
+
+    </div>
+    <script src="vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                count:0,
+                // loading:true,
+                movieUrl:'https://bird.ioliu.cn/v1?url=https://api.douban.com/v2/movie/subject/30261964?apikey=0df993c66c0c636e29ecbb5344252a4a',
+                movieList:[],
+                timer:null,
+            },
+            beforeCreate() {
+                console.log('beforeCreate');
+                // loading.gif
+            },
+            created() {
+                console.log('created');
+                this.timer = setInterval(() => {
+                    this.count++;
+                    console.log(1);
+                }, 1000);
+                   
+            },
+            beforeMount() {
+                console.log('beforeMount');
+            },
+            mounted() {
+                console.log('mounted');
+                loading = false;
+                document.getElementById('username').focus();
+                axios.get(this.movieUrl).then(res=>{
+                    console.log(res.data.subjests);
+                    this.movieList = res.data.subjests;
+                });
+            },
+            beforeUpdate() {
+                console.log('beforeUpdate');
+            },
+            updated() {
+                console.log('updated');
+            },
+            beforeDestroy() {
+                console.log('beforeDestroy');
+                clearInterval(this.timer);
+            },
+            methods: {
+                des(){
+                    this.$destroy();
+                }
+            },
+        })
+
+
+
+
+    </script>
+</body>
+</html>

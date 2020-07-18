@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="nav">
+        <li>001</li>
+        <li>002</li>
+        <li>003</li>
+        <li>004</li>
+    </ul>
+
+
+
+     <script>
+        //1
+        var a = 5;
+        console.log(a);  // 5
+
+        //2
+        var a = 5;
+        function foo(){
+            a = 6;
+            console.log('1==' + a);  //6
+        }
+        foo();
+        console.log('2==' + a);   //6
+
+        //3
+        var a = 5;
+        function foo(){
+            var a = 6;
+            console.log('1==' + a);  //6
+        }
+        foo();
+        console.log('2==' + a);   //5
+
+        //4
+        console.log(a);   //undefined  变量提升
+        var a = 5;
+
+        //5
+        var i = 8;
+        for (var i=0; i<5; i++){
+            console.log(i);  //1234
+        }
+        console.log(i); //5    var 没有块级作用域
+
+        //6
+        if(false){
+            var a = 5;
+        }
+        console.log(a);   //undefined
+
+        //7
+        console.log(a); //找不到
+        let a = 5;
+
+        //8
+        let a = 5;
+        let a = 6;
+        console.log(a);  //报错
+
+        //9
+        for (let i=0; i<5; i++){
+            console.log(i);  //1234
+        }
+        console.log(i);  //未定义报错      
+        
+        //10
+        if(false){
+            let a = 5;
+        }
+        console.log(a); //未定义报错
+
+        //11
+        function foo(){
+            console.log(a); //报错  必须先声明
+            let a = 5;
+        }
+        foo();
+
+        //12
+       var aLi = document.querySelectorAll('#nav li');
+       console.log(aLi);
+       for(i=0; i<aLi.length;i++){
+            aLi[i].index=i;
+            aLi[i].onclick = function(){
+                console.log(this.index);
+                
+            }
+       }     
+
+    // 闭包
+    // 1.外部函数中定义内部函数
+    // 2.内部函数引用外部函数的变量，这样外部函数的变量就不会被释放
+       var aLi = document.querySelectorAll('#nav li');
+       for(i=0; i<aLi.length;i++){
+            (function(idx){
+                aLi[idx].onclick = function(){
+                console.log(idx);
+            }
+            })(i);
+
+       }  
+
+
+       var aLi = document.querySelectorAll('#nav li');
+       for(let i=0; i<aLi.length;i++){
+            aLi[i].onclick = function(){
+                console.log(i);
+                i
+            }
+       }     
+
+     </script>
+</body>
+</html>

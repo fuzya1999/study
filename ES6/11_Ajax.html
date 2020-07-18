@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="list"></ul>
+    <script src="jquery.js"></script>
+
+
+    <script>
+        //1    jquery的Ajax
+        $.get('https://bird.ioliu.cn/v1?url=https://api.douban.com/v2/movie/subject/30261964?apikey=0df993c66c0c636e29ecbb5344252a4a',res=>{
+            console.log(res.popular_reviews);
+
+            let $list = $('#list');
+            for(let mov of res.popular_reviews){
+                let $li = $(`<li>${mov.title}</li>`);
+                $list.append($li);
+            }
+
+        },'json')
+
+        //2      原生的Ajax/Ajax原理
+        //2.1   创建 XMLHttpRequest 对象
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+          {// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+          }else
+          {// code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+        //2.2  向服务器发送请求
+        xmlhttp.open("GET","https://bird.ioliu.cn/v1?url=https://api.douban.com/v2/movie/subject/30261964?apikey=0df993c66c0c636e29ecbb5344252a4a",true);
+        xmlhttp.send();
+        //2.3  服务器响应
+        xmlhttp.onreadystatechange=function()
+        {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        //   document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+        //   console.log(xmlhttp.responseText);
+          let obj = JSON.parse(xmlhttp.responseText);
+          console.log(obj);
+          
+          
+          }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

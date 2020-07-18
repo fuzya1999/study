@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="app">
+        {{msg}}
+
+        <!-- 1.两者 -->
+        <div v-if="isLogin">
+            用户名是:周震南
+        </div>
+        <div v-else>
+            <a href="">请登录</a>
+        </div>
+
+
+        <!-- 2.三者 -->
+        <div v-if="str=='a'">a</div>
+        <div v-else-if="str=='b'">b</div>
+        <div v-else-if="str=='c'">c</div>
+        <div v-else-if="str=='d'">d</div>
+        <div v-else>e</div>
+
+        <!-- 3.与v-if的区别：
+          v-if:在html中有与无 （运用不频繁的时候用）
+          v-show：diplay：none与否的切换 (运用频繁的时候用)-->
+        <div v-show="isLogin">
+            周震南
+        </div>
+    </div>
+    {{msg}}
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'.app',
+            data:{
+                msg:'hello world',
+                isLogin:false,
+                str :'a'
+            }
+        })
+
+
+
+
+
+    </script>
+</body>
+</html>

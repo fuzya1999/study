@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <zzn> </zzn>
+        <zzn> </zzn>
+        <zzn> </zzn>
+        <zzn> </zzn>
+        <zzn> </zzn>
+        
+        <ul>       
+            <todolist @click.native="sele(item)" v-for = "(item,index) in productList"  :productName="item.productName"     :productPrice="item.productPrice"></todolist>
+        </ul>
+        <!-- <todolist prosuctname="衣服" productprice="123"></todolist>
+        <todolist prosuctname="裤子" productprice="45"></todolist>
+        <todolist prosuctname="鞋子" productprice="6"></todolist>
+        <todolist prosuctname="被子" productprice="7890"></todolist> -->
+
+        <template id="temp1">
+            <li>
+                <span>{{productName}}</span>
+                <span>{{productPrice}}</span>
+            </li>
+        </template>
+
+            
+
+
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('zzn',{
+            template:`
+            <div>
+                <h1>zzny</h1>    
+                <h1>myyy</h1>    
+            </div>
+            `
+        });
+        Vue.component('todolist',{
+            
+            template:'#temp1',
+                props:{
+                    productName:String,
+                    productPrice:Number,           //判断传进来的数据类型是否正确
+                }
+        });
+
+
+
+
+        new Vue({
+            el:'#app',
+            data(){
+                return{
+                    productList:[{
+                        productName:'衣服',
+                        productPrice: 123,
+                        isRed:false,
+                    },{
+                        productName:'裤子',
+                        productPrice: 79,
+                        isRed:false,
+                    },{
+                        productName:'鞋',
+                        productPrice: 1123,
+                        isRed:false,
+                    },{
+                        productName:'帽子',
+                        productPrice: 13,
+                        isRed:false,                                                
+                    },{
+                        productName:'书',
+                        productPrice: 23,
+                        isRed:false,                                               
+                    },{
+                        productName:'笔',
+                        productPrice: 3,
+                        isRed:false,
+                    }]
+                }
+            },
+            methods: {
+                sele(item){
+                    console.log(item.productName);
+                }
+            },
+        })
+
+
+
+
+    </script>
+</body>
+</html>

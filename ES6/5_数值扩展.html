@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //0B：二进制    0O：八进制     
+        //parseInt:取整==Math.trunc()
+        let a = 5;    //十进制5
+        console.log(a.toString(2));      //101    (二进制)
+        console.log(a.toString(16));      //5    (十六进制)c
+        console.log(a.toString(10));      //5    (十进制)
+        let b = 0B0101;
+        console.log(parseInt(b));     //5  (十进制)
+        console.log(b);               //5  (十进制)
+        let c = 0O666;
+        console.log(parseInt(c));     //438  (十进制)
+        console.log(Number.isFinite(5));  //true
+        console.log(Number.isFinite(NaN));  //false
+        console.log(Number.isNaN(NaN));  //true
+        console.log(Math.pow(2,53));   //9007199254740992  (2的53次方，js中最大的数)
+        let d = 5.9;
+        console.log(Math.trunc(d));    //5  取整 直接去掉小数
+        console.log(Math.floor(d));    //5  向下取整
+        console.log(Math.sign(2)); //1
+        console.log(Math.sign(-2)); //-1
+        console.log(Math.sign(0)); //0
+
+
+
+    </script>
+</body>
+</html>
