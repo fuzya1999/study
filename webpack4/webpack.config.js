@@ -1,10 +1,10 @@
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin/typings');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack/dist');
-const entry = require('../../webpack4/webpack.config/entry_webpack.js');
+const entry = require('./webpack.config/entry_webpack.js');
 const copyWebpackPlugin = require('copy-webpack-plugin');
 
 
@@ -12,7 +12,7 @@ module.exports = {
     mode:'development',
     entry: entry,
     // entry:{
-    //     index: './src/index.js',
+    //     index: './src/index.html',
     //     index2: './src/index2.js'
     // },
     output:{
@@ -88,6 +88,7 @@ module.exports = {
             title:'index2 -- title',
             minify:{
                 removeAttributeQuotes:true,
+
             },
             hash:true,
             template:'./src/index2.html'

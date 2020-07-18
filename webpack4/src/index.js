@@ -1,5 +1,5 @@
-import css from './css/index.css';
-import sass from './style/index.scss';
+import './css/index.css';
+// import sass from './style/index.scss';
 // import $ from 'jquery';
 import author from '../author.json';
 

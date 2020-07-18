@@ -1,0 +1,364 @@
+//此笔记的内容为网课ppt上的重点copy，如遇到与我的webpack不一样的，以webpack为准，因为webpack是我遇到问题百度后运行完毕的。
+网站：
+英文：https://webpack.js.org/
+中文：https://doc.webpack-china.org/
+Github: https://github.com/webpack/webpack
+
+1.安装webpack
+  (1)安装node  查看版本：node -v
+  (2) a. 全局安装(不建议)：npm install -g webpack
+         查看安装：webpack -v
+      b. 项目安装(建议)：进入项目目录(进入项目的根目录下)：
+         ——npm init / npm init -y (默认)   -->package.json
+         ——//输入如下代码
+            "script":{
+                "build": "webpack",
+                "dev": "webpack-dev-server"
+            },
+         ——npm install webpack webpack-cli --save-dev
+  注意：Mac加sudo/npm安装慢时，可以用yarn或cnpm(https://npm.taobao.org/)
+
+ 2.新建webpack.config.js
+   const path = require('path');
+   module.exports = {
+       mode:'development',        //mode:development(开发)/production(生产)
+       entry:{
+           index: './src/index.html',
+           index2: './src/index2.js'
+       },
+       output:{
+           path: path.resolve(__dirname,'./dist'),
+           filename: '[name].js',
+       },
+   }
+
+ 3.入口与出口
+    const path = require('path');
+    module.exports = {
+        //入口文件的配置项  (可以是单一入口，也可以是多入口)
+        entry:{
+            entry: './src/entry.html',
+            entry2: './src/entry2.js'
+        },
+        //入口文件的配置项  (在webpack2.X版本后，支持多出口配置)
+        output:{
+            path: path.resolve(__dirname,'dist'),
+            filename: '[name].js',
+        },
+        //模块：例如解读css，图片如何转换，压缩
+        module:{},
+        //插件：用于生产模块和各项功能
+        plugins:[],
+        //配置webpack开发服务功能
+        devServer:{}
+    }
+
+    npm run build命令打包
+
+ 4.服务与热更新1
+     a.//在webpack.config.js中输入如下代码
+     devServer:{
+         contentBase:path.resolve(__dirname,'dist'),
+         host:'localhost',
+         port:8081,
+         compress:true,
+     },
+     b.npm install --save-dev webpack-dev-server
+
+ 5.服务与热更新2
+   const webpack = require('webpack');
+
+   plugins:[
+           new webpack.HotModuleReplacementPlugin(),
+   ],
+   devServer:{
+           contentBase:path.resolve(__dirname,'dist'),
+           host:'127.0.0.1',
+           port:'8081',
+           compress:true,
+           open:true,
+           hot: true,
+   },
+
+ 6.HTML文件打包
+   ——a.npm install html-webpack-plugin --save-dev
+   ——b.
+   plugins:[
+       const HtmlWebpackPlugin = require('html-webpack-plugin/typings');
+
+       new HtmlWebpackPlugin({
+         minify:{
+           //去掉属性的双引号
+           removeAttributeQuotes:true,
+           //collapseWhitespace:true,  折叠空白区域
+         },
+         hash:true,   //为了开发中js有缓存效果，所以加入hash，这样可以有效避免缓存js
+         template:'./src/index.html',  //要打包的html模板路径和文件名称
+       })
+   ]
+
+ 7.多页面
+     new HtmlWebpackPlugin({
+         filename:'a.html',
+         chunks:['index11'],
+         title:'index1 - title',
+         minify:{
+             removeAttributeQuotes:true,
+         },
+         hash:true,
+         template:'./src/index.html',
+     }),
+     new HtmlWebpackPlugin({
+         filename:'b.html',
+         chunks:['index22'],
+         title:'index2 - title',
+         minify:{
+             removeAttributeQuotes:true,
+         },
+         hash:true,
+         template:'./src/index2.html'
+     }),
+
+ 8.CSS文件打包
+   ——a.在入口文件中：import css from './css/index.css';
+   ——b.
+   module:{
+     rules:[
+         {
+             test:/\.css$/,
+             use: ['style-loader','css-loader']             //css在.js文件里。
+         }
+     ]
+   },
+   ——c.(1)安装style-loader:npm install --save-dev style-loader
+             style-loader:用来处理css文件中的url()等，url挂在到js中
+       (2)安装css-loader:npm install --save-dev css-loader
+             css-loader:用来将css插入到页面的style标签
+
+ 9.CSS分离(mini-css-extract-plugin)
+   网址：https://github.com/webpack-contrib/extract-text-webpack-plugin
+   安装：npm install --save-dev extract-text-webpack-plugin@next
+
+   const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+   module:{
+       rules:[
+           {
+               test:/\.css$/,
+               //use: ['style-loader','css-loader']             //css在.js文件里。
+               use:ExtractTextPlugin.extract({           //css单独分离
+                   fallback:"style-loader",
+                   use:"css-loader"
+               })
+           },
+       ]
+   }
+
+   new ExtractTextPlugin('./css/index.css'),
+
+ 10.js代码压缩(4.X已经不需要了)
+    const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+    plugins:[
+        new UglifyJsPlugin()
+    ],
+
+    webpack4:mode:production
+
+ 11.CSS中引用图片
+    安装：npm install --save-dev file-loader url-loader
+
+    background-image:url(../image/logo.png);
+
+    module:{
+            rules:[
+                {
+                    test: /\.(png|jpg|gif)$/,        //匹配图片文件后缀名称
+                    use:[{                           //指定使用的loader和loader的配置参数
+                        loader:'url-loader',
+                        options:{
+                            limit:500,               //把小于500000B的文件打包成Base64的格式，写入css
+                            outputPath: 'images/',
+                        }
+                    }]
+                },
+            ]
+        },
+
+ 12.CSS分离2
+    css文件会分离出来，但如果图片是背景图片，这时候就会出现路径问题，需要配置publicPath来解决
+    output:{
+        path: path.resolve(__dirname,'./dist'),
+        filename: '[name].js',
+        publicPath: 'http://127.0.0.1:8081/'    //这一句
+    },
+
+ 13.HTML中的图片打包
+    官网：https://github.com/wzsxyz/html-withimg-loader
+    安装：npm install html-withimg-loader --save-dev
+
+    <div id="div3">
+        <img src="images/1.jpg" alt="'>
+    </div>
+
+    },{
+            test: /\.(htm|html)$/i,
+            loader: 'html-withimg-loader',
+    },
+
+ 14.Sass打包和分离
+ 安装：npm install --save-dev node-sass sass-loader
+
+ //在js文件中导入scss文件
+ import sass from './css/common.scss';
+
+ {
+     test: /\.scss/,
+     // use:['style-loader','css-loader','sass-loader']   //打包
+     use:ExtractTextPlugin.extract({           //css单独分离
+         fallback:"style-loader",
+         use:["css-loader",'sass-loader']
+     })
+ },
+
+ 15.CSS3前缀
+ 网址：https://github.com/postcss/postcss-losder
+ 下载：npm install --save-dev postcss-loader autoprefixer
+
+ 新建postcss.config.js并写入
+ module.exports = {
+     plugins:[
+         require('autoprefixer')
+     ]
+ }
+
+  module:{
+      rules:[
+          {
+              test:/\.css$/,
+              //use: ['style-loader','css-loader']             //css在.js文件里。
+              use:ExtractTextPlugin.extract({           //css单独分离
+                  fallback:"style-loader",
+                  use:[{
+                      loader:"css-loader",
+                      options:{importLoaders:1}
+                  },"postcss-loader"]
+              })
+          },
+
+  16.清楚未使用的css
+  网址：https://github.com/webpack-contrib/purifycss-webpack
+  安装：npm install --save-dev purifycss-webpack purify-css
+
+  const glob = require('glob');
+  const PurifyCSSPlugin = require('purifycss-webpack/dist');
+  new PurifyCSSPlugin({
+      // Give paths to parse for rules. These should be absolute!
+      paths: glob.sync(path.join(__dirname, 'src/*.html')),
+  }),
+
+  17.babel
+  安装：npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react
+      (简写babel-preset-env)
+
+  {
+      test:/\.(jsx|js)$/,
+      use:{
+          loader:'babel-loader',
+          options:{
+              presets:[
+                  'es2015','react'
+              ]
+          }
+      },
+      exclude:/node_modules/
+  }
+
+  19.打包注释
+  new webpack.BannerPlugin('周震南最帅'),
+
+  20.模块化配置
+  (1)在webpack.config文件夹中新建entry_webpack.js
+  (2)//输入代码
+      const entry = {
+          entry:'./src/component.js'
+      };
+      module.exports = entry;
+
+      const entry = require('./webpack.config/entry_webpack.js');
+
+      module.exports = {
+          //入口文件的配置项
+          entry: entry,
+      }
+
+  21.开发环境与生产环境
+   devDependencies 存放测试代码依赖的包或构建工具的包(--save-dev)
+   dependencies 存放项目或组件代码中依赖到的(--save)
+
+   安装全部项目依赖包:npm install
+   安装生产环境依赖包:npm install --production
+
+  22.打包第三方类库
+   安装：npm install jquery --save
+
+   ——(1)import $ from 'jquery';
+   ——(2)
+        const webpack = require("webpack");
+
+        new webpack.ProvidePlugin({
+            $:"jquery"
+        }),
+   ——(3)4.X取消了CommonsChunkPlugin
+        //entry_webpack.js
+        const entry = {
+            entry:'./src/component.js'，
+            jquery:'jquery'
+        };
+        module.exports = entry;
+
+        new webpack.optimize.CommonsChunkPlugin({
+            //name对应入口文件中的名字
+            name: 'jquery',
+            //把文件打包到哪里，是一个路径
+            filename:"assets/js/jquery.js" ,
+            //最小打包的文件模块树，这里直接写2就好
+            minChunks:2
+        })
+
+        new webpack.optimize.CommonsChunkPlugin({
+            //name对应入口文件中的名字
+            name: ['jquery','vue'],
+            //把文件打包到哪里，是一个路径
+            filename:"assets/js/[name].js" ,
+            //最小打包的文件模块树，这里直接写2就好
+            minChunks:2
+        })
+
+  23.资源拷贝
+   安装：npm install --save-dev copy-webpack-plugin
+
+   const copyWebpackPlugin = require('copy-webpack-plugin');
+
+   new copyWebpackPlugin({
+       patterns: [
+           {
+           from: __dirname + '/src/public',
+           to: './public',
+           }
+       ]
+   })
+
+  24.Json文件
+    根部录下创建json文件：
+    //author.json
+    {
+        "name":"xiecheng",
+        "age":30,
+        "company":"weichuang"
+    }
+
+    //index.js
+    import json from '../author.json';
+    document.querySelector('#json').innerHTML = `作者是:${author.name},公司是:${author.company}`
+
