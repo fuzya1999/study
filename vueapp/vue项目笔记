@@ -1,0 +1,40 @@
+1. 新建项目
+(1)在命令行输入vue ui (打开网页新建项目)
+   包管理器选npm->手动->(babel、Router、Vuex、CSS Pre-processors、Linter/Formatter)->勾选use history
+   ->Sass/SCSS->...Airbnb...
+   注意：a. npm run serve 运行打开页面
+         b.如果要自动打开，需要在项目根目录新建文件vue.config.js，并写入如下代码：
+            module.exports = {
+            devServer:{
+                port:8082,
+                open:true,
+            }
+            }
+
+
+2.文件介绍
+  public：打包后原方不动地复制到dist文件中
+  src/assets：打包时需要处理的文件
+  components：许多文件共用的
+  view：只有自己用，不共用的,不重复使用的
+
+3.redirect('')重定向
+
+4.props:[],   父组件给子组件传值 (:)
+  $emit       子组件给父组件传值 (@)
+    ——例如：this.$emit('changeTitle',menu);  //changeTitle：定义的事件    menu：要传给父组件的元素
+
+          <CommonFooter @changeTitle="changeTitle" :menuList="menuList"></CommonFooter>  
+
+     
+
+5.   .native 如果是html自带的标签不用加.native，如果是自定义的组件要加.native
+    <li @click="(selectMenu(menu))" v-for="(menu,index) in menuList" :key="index" class="footer-menu"></li>
+    
+    <router-link @click.native="(selectMenu(menu))" :to="menu.path">{{menu.title}}</router-link>
+
+6.ctrl+F 查找
+        
+7.vue请求网络图片403错误，图片有占位但是显示不出来解决办法
+//在index.html中加入
+<meta name="referrer" content="no-referrer" />
