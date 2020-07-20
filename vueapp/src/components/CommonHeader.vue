@@ -1,6 +1,6 @@
 <template>
     <header class="header" :style="{background:test.bgColor}">
-        <span class="header-home">首页</span>
+        <span class="header-home" @click="goBack">首页</span>
         <h3 class="header-title">{{test.title?test.title:'电影'}}</h3>
     </header>
 </template>
@@ -8,15 +8,20 @@
 <script>
 export default {
     props:['test'],
+    methods: {
+        goBack(){
+            this.$router.push('/');
+        }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
     .header{
+        position:fixed;
         height: 1rem;
         background-color: #e54747;
         line-height:1rem;
-        position:fixed;
         top:0;
         left:0;
         width:100%;

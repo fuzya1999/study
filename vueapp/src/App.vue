@@ -56,6 +56,8 @@ export default {
 </script>
 <style lang="scss">
   .content{
-    margin: 1rem 0;
+    margin-top: 1rem;
+    margin-bottom:1.5rem;
+    overflow:hidden;
   }
 </style>

@@ -14,8 +14,8 @@ export default {
 
 <style lang="scss" scoped>
     .footer{
-        display:flex;
         position:fixed;
+        display:flex;
         bottom:0;
         width:100%;
         height:1rem;

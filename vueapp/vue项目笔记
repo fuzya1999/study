@@ -19,6 +19,8 @@
   view：只有自己用，不共用的,不重复使用的
 
 3.redirect('')重定向
+  slice() 方法可从已有的数组中返回选定的元素。
+  concat() 方法用于连接两个或多个数组。
 
 4.props:[],   父组件给子组件传值 (:)
   $emit       子组件给父组件传值 (@)
@@ -38,3 +40,8 @@
 7.vue请求网络图片403错误，图片有占位但是显示不出来解决办法
 //在index.html中加入
 <meta name="referrer" content="no-referrer" />
+
+8.当顶部和底部设置了position:fixed;之后滚动页面，顶部和底部还是会动时
+    //给中间部分设置溢出隐藏
+    overflow:hidden;
+  
