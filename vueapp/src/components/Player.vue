@@ -68,14 +68,14 @@ export default {
                     //拥抱春天歌词有问题没有变化，其他的都有变化
                     this.getUrl3 = this.getUrl2.split('\n' || '\b');
                     console.log(this.getUrl3);
-                    
+
                 });
                  setInterval(()=>{
                     let ccc = document.getElementById('eee');
                     console.log(16 * parseInt(this.ddd));
                     this.ddd=parseInt(this.ddd) + 1;
                     ccc.scrollTop = 16 * parseInt(this.ddd);
-            },3000);        
+            },3000);
             },
     },
     props:['musicList','musicOn'],
@@ -83,18 +83,18 @@ export default {
         clickList(index){
             this.getIndex = index;
             console.log(this.getIndex);
-            
+
         },
         start(){
             this.on = !this.on;
             if(this.on && this.getIndex != -1){
                 this.$refs.play.play();
-               
+
             }else{
                 this.on = false;
                 this.$refs.play.pause();
                 clearInterval(eee);
-            }; 
+            };
         },
         onlist(){
             this.onList = !this.onList;
@@ -107,7 +107,7 @@ export default {
                 console.log(this.getIndex);
                 }
             }
-            
+
         },
         next(getIndex){
             if(this.getSong != '还没有选择歌曲哦'){
