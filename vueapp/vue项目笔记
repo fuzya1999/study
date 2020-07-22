@@ -61,5 +61,39 @@
 
   13.filter:blur();
 
-  14.transition
+  14.transition标签
+      (1)使用transition元素把需要被动画控制的元素，包裹起来
+        <transition>
+            <h3 v-if="flag">这是一个H3</h3>
+        </transition>
+      (2)设置name="" 区分不同组织间动画
+        <transition  name="my">
+            <h6 v-if="flag2">这是一个H6</h6>
+        </transition>
+      (3)v-enter : 是进入之前，元素的起始状态
+         v-leave-to : 离开之后动画的终止状态
+         v-enter-active : 入场动画的时间段
+         v-leave-active : 离场动画的时间段
+
+        例如1：
+        .v-enter,.v-leave-to{
+            opacity:  0;/*透明度*/
+            transform: translateX(150px);
+        }
+        .v-enter-active,.v-leave-active{
+            transition: all 0.8s ease;
+
+        }
+        例如2：
+        &enter{
+          transform: translateY(100%);
+          &-to{
+            transform: translateY(0);
+          }
+          &-active{
+            transition: transform 1s ease;   //过渡
+          }
+        }
+
     
+  15.watch：每次发生改变都会调用watch里面的东西

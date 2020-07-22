@@ -9,25 +9,31 @@
                 <div class="play-right-song">{{getSong}}</div>
                 <div class="play-right-singer">{{getSinger}}</div>
                 <div class="play-right-font">
-                    <i class="iconfont">&#xe607;</i>
+                    <i class="iconfont" @click="before()">&#xe607;</i>
                     <i v-show="!on" @click="start" class="off iconfont">&#xe60c;</i>
                     <i v-show="on" @click="start" class="on iconfont">&#xe606;</i>
-                   <i class="iconfont"> &#xe616;</i>
+                    <i class="iconfont" @click = "next()"> &#xe616;</i>
                 </div>
-                <div class="play-right-list">歌单</div>
+                <div class="play-right-list" @click="onlist">歌单</div>
             </div>
         </div>
-        <ul class="list">
-            <li @click="clickList(music,index)" v-for="(music,index) in musicList" :key="music.id" class="list-info" >
-                {{music.title}}&nbsp - &nbsp{{music.artist_name}}
-            </li>
+        <ul class="url" id="eee">
+            <li v-for="(url,index) in getUrl3">{{url}}</li>
         </ul>
-        <audio :src="musicOn" class="play-audio" autoplay="autoplay" controls=true></audio>
+        <transition name="aslide">
+            <ul class="list" v-show="onList">
+                <li @click="clickList(index)" v-for="(music,index) in musicList" :key="music.id" class="list-info" >
+                    {{music.title}}&nbsp - &nbsp{{music.artist_name}}
+                </li>
+            </ul>
+        </transition>
+        <audio :src="musicOn" class="play-audio" autoplay="autoplay" controls=true @play="on=true" @pause="on=false" ref="play"></audio>
     </div>
 </template>
 
 <script>
 import '@/assets/css/font.css';
+import axios from 'axios';
 export default {
     data() {
         return {
@@ -36,20 +42,83 @@ export default {
             getSinger:'还没有选择歌手哦',
             on:false,
             getSongId:'',
+            onList:false,
+            getIndex:'-1',
+            getUrl:'',
+            getUrl2:'',
+            getUrl3:'',
+            ddd:'0',
         }
+    },
+    watch: {
+            getIndex(){
+                let b = this.musicList[this.getIndex];
+                console.log(b);
+                this.getImg=b.pic_premium;
+                this.getSong = b.title;
+                this.getSinger = b.artist_name;
+                this.getSongId = b.song_id;
+                this.$emit('songId', this.getSongId);
+                this.getUrl = b.lrclink;
+                console.log(this.getUrl);
+                axios.get(this.getUrl).then(res=>{
+                    console.log(res.data);
+                    this.getUrl2 = res.data;
+                    console.log(this.getUrl2);
+                    //拥抱春天歌词有问题没有变化，其他的都有变化
+                    this.getUrl3 = this.getUrl2.split('\n' || '\b');
+                    console.log(this.getUrl3);
+                    
+                });
+                 setInterval(()=>{
+                    let ccc = document.getElementById('eee');
+                    console.log(16 * parseInt(this.ddd));
+                    this.ddd=parseInt(this.ddd) + 1;
+                    ccc.scrollTop = 16 * parseInt(this.ddd);
+            },3000);        
+            },
     },
     props:['musicList','musicOn'],
     methods: {
-        clickList(music,index){
-            this.getImg=music.pic_premium;
-            this.getSong = music.title;
-            this.getSinger = music.artist_name;
-            this.getSongId = music.song_id;
-            this.$emit('songId', this.getSongId);
+        clickList(index){
+            this.getIndex = index;
+            console.log(this.getIndex);
+            
         },
         start(){
             this.on = !this.on;
-        }
+            if(this.on && this.getIndex != -1){
+                this.$refs.play.play();
+               
+            }else{
+                this.on = false;
+                this.$refs.play.pause();
+                clearInterval(eee);
+            }; 
+        },
+        onlist(){
+            this.onList = !this.onList;
+        },
+        before(getIndex){
+            if(this.getSong != '还没有选择歌曲哦'){
+                this.getIndex--;
+                if(this.getIndex==-1){
+                    this.getIndex = this.musicList.length-1;
+                console.log(this.getIndex);
+                }
+            }
+            
+        },
+        next(getIndex){
+            if(this.getSong != '还没有选择歌曲哦'){
+                this.getIndex++;
+                if(this.getIndex==this.musicList.length){
+                    this.getIndex = 0;
+                console.log(this.getIndex);
+                }
+            }
+        },
+
     },
 }
 </script>
@@ -132,11 +201,43 @@ export default {
             bottom:1rem;
             width:100%;
             height:1rem;
+            background:#ccc;
             border-radius:0!important;
         }
     }
     .off, .on{
         font-size:0.5rem!important;
         margin-left:0.1rem;
+    }
+    .aslide{
+        &-enter{
+            transform: translateY(100%);
+            &-to{
+                transform: translateY(0);
+            }
+            &-active{
+                transition: transform 1s ease;
+            }
+        }
+        &-leave{
+            transform: translateY(0);
+            &-to{
+                transform: translateY(100%);
+            }
+            &-active{
+                transition: transform 1s ease;
+            }
+        }
+
+
+    }
+    .url{
+        position:fixed;
+        width:100%;
+        height:6.106667rem;
+        // color:#36d5c5;
+        color:#ccc;
+        overflow-y:scroll;
+        text-align:center;
     }
 </style>
